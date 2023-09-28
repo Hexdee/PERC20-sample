@@ -22,7 +22,7 @@ async function main() {
 
     const beforeBalanceReq = await sendSignedShieldedQuery(
       account,
-      "0x5327377acFa559A0D82B7a9040E19F8CD10811aB",
+      perc20.address,
       perc20.interface.encodeFunctionData("balanceOf", [account.address]),
     );
   
@@ -32,13 +32,13 @@ async function main() {
 
     const transferReq = await sendShieldedTransaction(
       account,
-      "0x5327377acFa559A0D82B7a9040E19F8CD10811aB",
+      perc20.address,
       perc20.interface.encodeFunctionData("transfer", ["0x16af037878a6cAce2Ea29d39A3757aC2F6F7aac1", ethers.utils.parseEther("1")]),
     );
 
     const afterBalanceReq = await sendSignedShieldedQuery(
       account,
-      "0x5327377acFa559A0D82B7a9040E19F8CD10811aB",
+      perc20.address,
       perc20.interface.encodeFunctionData("balanceOf", [account.address]),
     );
 
