@@ -63,3 +63,19 @@ module.exports.sendSignedShieldedQuery = async (wallet, destination, data) => {
     // Decrypt call result
     return await decryptNodeResponse(wallet.provider.connection.url, response, usedEncryptedKey)
 }
+
+module.exports.sendShieldedTransaction = async (signer, destination, data, value) => {
+  // Get the RPC link from the Hardhat network configuration
+  const rpcLink = hre.network.config.url;
+
+  // Encrypt transaction data
+  const [encryptedData] = await encryptDataField(rpcLink, data);
+
+  // Construct and sign the transaction with encrypted data
+  return await signer.sendTransaction({
+    from: signer.address,
+    to: destination,
+    data: encryptedData,
+    value,
+  });
+};
